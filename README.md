@@ -28,19 +28,20 @@ Initialize the database and run migrations from a directory.
 ```go
 package main
 
-import "github.com/Des1red/sqlitekit"
+import "github.com/Des1red/sqlitekit/sqlitekit"
 
-func main() {
+var DB *sql.DB
 
+func InitDb() {
 	err := sqlitekit.Initialize(
 		"data/app.db",
 		"internal/database/schema",
 	)
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-
+	DB = sqlitekit.DB()
 }
 ```
 #### Embedded migrations
@@ -50,7 +51,7 @@ package main
 
 import (
 	"embed"
-	"github.com/Des1red/sqlitekit"
+	"github.com/Des1red/sqlitekit/sqlitekit"
 )
 
 //go:embed schema/*.sql
@@ -88,7 +89,7 @@ You can override the configuration before initialization:
 ```go
 package main
 
-import "github.com/Des1red/sqlitekit"
+import "github.com/Des1red/sqlitekit/sqlitekit"
 var DB *sql.DB
 func main() {
 
